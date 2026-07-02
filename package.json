@@ -9,6 +9,23 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "@types/express": "^5.0.6"
-  }
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.0",
+    "typescript": "^6.0.3"
+  },
+  "name": "ts_chirpy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalinith/ts_chirpy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalinith/ts_chirpy/issues"
+  },
+  "homepage": "https://github.com/kalinith/ts_chirpy#readme"
 }
