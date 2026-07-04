@@ -7,9 +7,9 @@ import { HandlerRes } from "./handlers/reset.js";
 const app = express();
 const PORT = 8080;
 app.use("/app", middlewareMetricsInc, express.static("./src/app"));
-app.get("/healthz", handlerReadiness);
-app.get("/metrics", handlerMetrics);
-app.get("/reset", HandlerRes);
+app.get("/api/healthz", handlerReadiness);
+app.get("/api/metrics", handlerMetrics);
+app.get("/api/reset", HandlerRes);
 app.use(middlewareLogResponses);
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
