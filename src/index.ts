@@ -16,7 +16,7 @@ app.get("/api/healthz", handlerReadiness);
 
 // admin
 app.get("/admin/metrics", handlerMetrics);
-app.get("/admin/reset", HandlerRes);
+app.post("/admin/reset", HandlerRes);
 
 
 // launch server
