@@ -1,49 +1,16 @@
 export async function handlerValidateChirp(req, res) {
-    let body = ""; // 1. Initialize
-    const chirpData = { "body": null, "error": null, "statusCode": null, "valid": false };
-    // 2. Listen for data events
-    req.on("data", (chunk) => {
-        body += chunk;
-    });
-    // 3. Listen for end events
-    req.on("end", () => {
-        try {
-            const parsedBody = JSON.parse(body);
-            // now you can use `parsedBody` as a JavaScript object
-            if (typeof parsedBody.body === "string") {
-                if (parsedBody.body.length <= 140) {
-                    chirpData.body = parsedBody.body;
-                    chirpData.valid = true;
-                    chirpData.statusCode = 200;
-                }
-                else {
-                    chirpData.error = "Chirp is too long";
-                    chirpData.statusCode = 400;
-                    chirpData.valid = false;
-                }
-            }
-            else {
-                chirpData.error = "Invalid chirp data";
-                chirpData.statusCode = 400;
-                chirpData.valid = false;
-            }
-        }
-        catch (error) {
-            chirpData.error = "Something went wrong";
-            chirpData.statusCode = 400;
-            chirpData.valid = false;
-        }
-        finally {
-            let body = ""; // 1. Initialize
-            res.status(chirpData.statusCode || 500);
-            res.header("Content-Type", "application/json");
-            if (chirpData.error === null) {
-                body = JSON.stringify({ valid: chirpData.valid, });
-            }
-            else {
-                body = JSON.stringify({ error: chirpData.error, });
-            }
-            res.send(body);
-        }
-    });
+    const chirp = req.body;
+    res.header("Content-Type", "application/json");
+    if (chirp.body === null) {
+        res.status(400);
+        res.send(JSON.stringify({ "error": "omething went wrong" }));
+    }
+    else if (chirp.body.length < 140) {
+        res.status(200);
+        res.send(JSON.stringify({ "valid": true }));
+    }
+    else {
+        res.status(400);
+        res.send(JSON.stringify({ "error": "Chirp is too long" }));
+    }
 }

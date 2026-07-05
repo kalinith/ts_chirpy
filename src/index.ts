@@ -8,6 +8,9 @@ import { handlerValidateChirp } from "./handlers/validateChirp.js";
 
 const app = express();
 const PORT = 8080;
+// declare middleware for use in the app
+app.use(middlewareLogResponses);
+app.use(express.json());
 
 // app
 app.use("/app", middlewareMetricsInc, express.static("./src/app"));
@@ -22,7 +25,6 @@ app.post("/admin/reset", HandlerRes);
 
 
 // launch server
-app.use(middlewareLogResponses);
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
