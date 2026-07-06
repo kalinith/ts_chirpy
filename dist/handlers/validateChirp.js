@@ -1,3 +1,4 @@
+import { BadRequestError } from "./error.js";
 function wordCheck(chirp) {
     const profaneWords = ["kerfuffle", "sharbert", "fornax"];
     const words = chirp.split(" ");
@@ -16,15 +17,14 @@ export async function handlerValidateChirp(req, res) {
     const chirp = req.body;
     res.header("Content-Type", "application/json");
     if (chirp.body === null) {
-        res.status(400);
-        res.send(JSON.stringify({ "error": "Something went wrong" }));
+        throw new BadRequestError("Chirp is required");
     }
-    else if (chirp.body.length < 140) {
+    else if (chirp.body.length > 140) {
+        throw new BadRequestError("Chirp is too long. Max length is 140");
+    }
+    else {
         const cleanChirp = wordCheck(chirp.body);
         res.status(200);
         res.send(JSON.stringify({ "cleanedBody": cleanChirp }));
-    }
-    else {
-        throw new Error("Chirp body exceeds 140 characters");
     }
 }

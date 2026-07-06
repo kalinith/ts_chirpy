@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { BadRequestError } from "./error.js";
 
 type Profane = "kerfuffle" | "sharbert" | "fornax";
 
@@ -24,14 +25,12 @@ export async function handlerValidateChirp(req: Request, res: Response): Promise
     const chirp: Chirp = req.body;
     res.header("Content-Type", "application/json");
     if (chirp.body === null) {
-        res.status(400);
-        res.send(JSON.stringify({ "error": "Something went wrong" }));
-    } else if (chirp.body.length < 140) {
-        const cleanChirp = wordCheck(chirp.body)
-
+        throw new BadRequestError("Chirp is required");
+    } else if (chirp.body.length > 140) {
+        throw new BadRequestError("Chirp is too long. Max length is 140");
+    } else {
+        const cleanChirp = wordCheck(chirp.body);
         res.status(200);
         res.send(JSON.stringify({ "cleanedBody": cleanChirp }));
-    } else {
-        throw new Error("Chirp body exceeds 140 characters");
     }
 }
