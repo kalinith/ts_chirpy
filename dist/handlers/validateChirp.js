@@ -25,7 +25,6 @@ export async function handlerValidateChirp(req, res) {
         res.send(JSON.stringify({ "cleanedBody": cleanChirp }));
     }
     else {
-        res.status(400);
-        res.send(JSON.stringify({ "error": "Chirp is too long" }));
+        throw new Error("Chirp body exceeds 140 characters");
     }
 }

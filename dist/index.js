@@ -5,6 +5,7 @@ import { middlewareMetricsInc } from "./middleware/metrics.js";
 import { handlerMetrics } from "./handlers/metrics.js";
 import { HandlerRes } from "./handlers/reset.js";
 import { handlerValidateChirp } from "./handlers/validateChirp.js";
+import { errorHandler } from "./handlers/error.js";
 const app = express();
 const PORT = 8080;
 // declare middleware for use in the app
@@ -18,6 +19,8 @@ app.post("/api/validate_chirp", handlerValidateChirp);
 // admin
 app.get("/admin/metrics", handlerMetrics);
 app.post("/admin/reset", HandlerRes);
+// Error Handling
+app.use(errorHandler);
 // launch server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
