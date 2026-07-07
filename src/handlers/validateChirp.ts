@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { BadRequestError } from "./error.js";
+import { BadRequestError } from "../middleware/error.js";
 
 type Profane = "kerfuffle" | "sharbert" | "fornax";
 

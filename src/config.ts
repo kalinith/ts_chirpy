@@ -1,11 +1,5 @@
 import type { MigrationConfig } from "drizzle-orm/migrator";
 
-process.loadEnvFile()
-
-const migrationConfig: MigrationConfig = {
-  migrationsFolder: "./src/db/migrations",
-};
-
 type DBConfig = {
   url: string;
   migrationConfig: MigrationConfig;
@@ -21,6 +15,21 @@ type Config = {
   db: DBConfig;
 };
 
+process.loadEnvFile()
+
+function envOrThrow(key: string): string {
+  const value = process.env[key];
+  if (!value) {
+    throw new Error(`Missing environment variable: ${key}`);
+  }
+  return value;
+}
+
+const migrationConfig: MigrationConfig = {
+  migrationsFolder: "./src/db/migrations",
+};
+
+
 export const config: Config = {
   api: {
     fileServerHits: 0,
@@ -31,11 +40,3 @@ export const config: Config = {
     migrationConfig: migrationConfig,
   },
 };
-
-function envOrThrow(key: string): string {
-  const value = process.env[key];
-  if (!value) {
-    throw new Error(`Missing environment variable: ${key}`);
-  }
-  return value;
-}
