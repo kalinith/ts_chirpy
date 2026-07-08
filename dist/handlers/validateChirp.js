@@ -1,4 +1,4 @@
-import { BadRequestError } from "./error.js";
+import { BadRequestError } from "../middleware/error.js";
 function wordCheck(chirp) {
     const profaneWords = ["kerfuffle", "sharbert", "fornax"];
     const words = chirp.split(" ");
