@@ -1,6 +1,6 @@
 import { BadRequestError } from "../middleware/error.js";
 import { getUserById } from "../db/queries/users.js";
-import { createChirp, getChirps } from "../db/queries/chirps.js";
+import { createChirp, getChirpbyID, getChirps } from "../db/queries/chirps.js";
 function wordCheck(chirp) {
     const profaneWords = ["kerfuffle", "sharbert", "fornax"];
     const words = chirp.split(" ");
@@ -50,4 +50,17 @@ export async function handlerGetChirps(req, res) {
     res.contentType("application/json");
     res.status(200);
     res.json(chirps);
+}
+export async function handlerGetChirp(req, res) {
+    const params = req.params;
+    if (!params.chirpId) {
+        throw new BadRequestError("Chirp ID is required");
+    }
+    const chirp = await getChirpbyID(params.chirpId);
+    if (!chirp) {
+        throw new BadRequestError("Chirp not found");
+    }
+    res.contentType("application/json");
+    res.status(200);
+    res.json(chirp);
 }
