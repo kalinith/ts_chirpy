@@ -1,6 +1,6 @@
 import { BadRequestError } from "../middleware/error.js";
 import { getUserById } from "../db/queries/users.js";
-import { createChirp } from "../db/queries/chirps.js";
+import { createChirp, getChirps } from "../db/queries/chirps.js";
 function wordCheck(chirp) {
     const profaneWords = ["kerfuffle", "sharbert", "fornax"];
     const words = chirp.split(" ");
@@ -44,4 +44,10 @@ export async function handlerAddChirp(req, res) {
         res.status(201);
         res.send(JSON.stringify(result));
     }
+}
+export async function handlerGetChirps(req, res) {
+    const chirps = await getChirps();
+    res.contentType("application/json");
+    res.status(200);
+    res.json(chirps);
 }

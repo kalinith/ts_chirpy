@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { BadRequestError } from "../middleware/error.js";
 import { getUserById } from "../db/queries/users.js";
 import { NewChirp } from "../db/schema/chirps.js";
-import { createChirp } from "../db/queries/chirps.js";
+import { createChirp, getChirps } from "../db/queries/chirps.js";
 
 type Profane = "kerfuffle" | "sharbert" | "fornax";
 
@@ -52,3 +52,9 @@ export async function handlerAddChirp(req: Request, res: Response): Promise<void
     }
 }
 
+export async function handlerGetChirps(req: Request, res: Response): Promise<void> {
+    const chirps = await getChirps();
+    res.contentType("application/json");
+    res.status(200);
+    res.json(chirps);
+}
