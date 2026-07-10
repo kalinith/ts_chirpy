@@ -8,7 +8,7 @@ import { handlerReadiness } from "./handlers/healthz.js";
 import { handlerMetrics } from "./handlers/metrics.js";
 import { HandlerRes } from "./handlers/reset.js";
 import { handlerAddChirp, handlerGetChirps, handlerGetChirp} from "./handlers/Chirps.js";
-import { handlerAddUser } from "./handlers/users.js";
+import { handlerAddUser, handlerLogin } from "./handlers/users.js";
 
 import { middlewareLogResponses } from "./middleware/logresponse.js";
 import { middlewareMetricsInc } from "./middleware/metrics.js";
@@ -35,6 +35,9 @@ app.get("/api/healthz", (req, res, next) => {
 app.post("/api/users", (req, res, next) => {
   Promise.resolve(handlerAddUser(req, res)).catch(next);
 });
+app.post("/api/login", (req, res, next) => {
+  Promise.resolve(handlerLogin(req, res)).catch(next);
+})
 // api/chirps
 app.post("/api/chirps", (req, res, next) => {
   Promise.resolve(handlerAddChirp(req, res)).catch(next);

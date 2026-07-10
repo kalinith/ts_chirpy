@@ -23,3 +23,7 @@ export async function getUserById(userId) {
     const user = await db.select().from(users).where(eq(users.id, userId));
     return FirstOrUndefined(user);
 }
+export async function getUserByEmail(email) {
+    const user = await db.select().from(users).where(eq(users.email, email));
+    return FirstOrUndefined(user);
+}
